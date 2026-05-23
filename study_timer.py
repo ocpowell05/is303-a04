@@ -51,7 +51,7 @@ from datetime import datetime
 sessions = []
 def get_valid_string():
     while True:
-        subject = input("What subject are you studying?").title()
+        subject = input("What subject are you studying? ").title()
         if not subject.strip():
             print("Please enter a subject name.")
         else:
@@ -114,9 +114,13 @@ while track_another == "yes":
     if start_input == "start":
         start_timestamp, subject = start_logging()
         stop_input = input("Enter in 'stop' when you are done with the session. ").lower()
-        if stop_input == "stop":
-            end_logging(start_timestamp, sessions, subject)
-            track_another = input("Would you like to add another? (yes/no) ").lower()
+        while stop_input != "stop":
+            stop_input = input("Please enter 'stop' when you are done with the session. ").lower()
+        end_logging(start_timestamp, sessions, subject)
+        track_another = input("Would you like to add another? (yes/no) ").lower()
+        while track_another != "yes" and track_another != "no":
+            track_another = input("Please enter yes or no.").lower()
+            
 totals = calculate_totals(sessions)
 busiest_subject = find_busiest(totals)
 display_report(sessions, totals, busiest_subject)
